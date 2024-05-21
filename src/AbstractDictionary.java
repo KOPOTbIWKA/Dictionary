@@ -35,8 +35,8 @@ public abstract class AbstractDictionary implements Dictionary {
 
     @Override
     public String searchEntry(String key) {
-
-        return key;
+        Map<String, String> dictionary = readDictionary();
+        return dictionary.get(key);
     }
 
     @Override
