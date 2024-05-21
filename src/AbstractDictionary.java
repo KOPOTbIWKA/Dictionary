@@ -11,8 +11,19 @@ public abstract class AbstractDictionary implements Dictionary {
 
     @Override
     public Map<String, String> readDictionary() {
-
-        return Map.of();
+        Map<String, String> dictionary = new HashMap<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(":");
+                if (isValidKey(parts[0])) {
+                    dictionary.put(parts[0], parts[1]);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return dictionary;
     }
 
     @Override
