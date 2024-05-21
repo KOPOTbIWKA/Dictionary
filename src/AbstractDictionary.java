@@ -41,7 +41,13 @@ public abstract class AbstractDictionary implements Dictionary {
 
     @Override
     public void addEntry(String key, String value) {
-
+        if (!isValidKey(key)) {
+            System.out.println("Неверный формат ключа");
+            return;
+        }
+        Map<String, String> dictionary = readDictionary();
+        dictionary.put(key, value);
+        writeDictionary(dictionary);
     }
 
     protected abstract boolean isValidKey(String key);
