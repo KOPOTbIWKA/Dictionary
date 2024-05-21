@@ -28,7 +28,9 @@ public abstract class AbstractDictionary implements Dictionary {
 
     @Override
     public void removeEntry(String key) {
-
+        Map<String, String> dictionary = readDictionary();
+        dictionary.remove(key);
+        writeDictionary(dictionary);
     }
 
     @Override
