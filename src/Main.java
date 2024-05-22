@@ -1,5 +1,3 @@
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -14,38 +12,15 @@ public class Main {
         }
     }
 
-    private static void ensureFileExists(String filename) {
-        File file = new File(filename);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-                System.out.println("Файл " + filename + " не найден, создан новый файл.");
-            } catch (IOException e) {
-                System.out.println("Не удалось создать файл " + filename + ": " + e.getMessage());
-            }
-        }
-    }
-
-    private static boolean fileExists(String filename) {
-        return new File(filename).exists();
-    }
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        String letterFilename = "letter_dictionary.txt";
-        String numberFilename = "number_dictionary.txt";
-
-        ensureFileExists(letterFilename);
-        ensureFileExists(numberFilename);
-
-        LetterDictionary letterDictionary = new LetterDictionary(letterFilename);
-        NumberDictionary numberDictionary = new NumberDictionary(numberFilename);
+        FileManager fileManager = new FileManager();
 
         while (true) {
             System.out.println("\nТекущие словари:");
-            System.out.println("Буквенный словарь: " + letterFilename);
-            System.out.println("Цифровой словарь: " + numberFilename);
+            System.out.println("Буквенный словарь: " + fileManager.getLetterFilename());
+            System.out.println("Цифровой словарь: " + fileManager.getNumberFilename());
 
             System.out.println("\nВыберите словарь:");
             System.out.println("1. Работать с текущим буквенным словарем");
@@ -59,47 +34,19 @@ public class Main {
             Dictionary dictionary = null;
             switch (choice) {
                 case "1":
-                    dictionary = letterDictionary;
+                    dictionary = fileManager.getLetterDictionary();
                     break;
                 case "2":
-                    dictionary = numberDictionary;
+                    dictionary = fileManager.getNumberDictionary();
                     break;
                 case "3":
-                    letterFilename = promptFilename(scanner, "Введите имя файла для другого буквенного словаря:");
-                    if (fileExists(letterFilename)) {
-                        letterDictionary = new LetterDictionary(letterFilename);
-                        System.out.println("Буквенный словарь изменен на: " + letterFilename);
-                    } else {
-                        System.out.println("Файл " + letterFilename + " не найден.");
-                    }
+                    fileManager.chooseLetterDictionary(scanner);
                     continue;
                 case "4":
-                    numberFilename = promptFilename(scanner, "Введите имя файла для другого цифрового словаря:");
-                    if (fileExists(numberFilename)) {
-                        numberDictionary = new NumberDictionary(numberFilename);
-                        System.out.println("Цифровой словарь изменен на: " + numberFilename);
-                    } else {
-                        System.out.println("Файл " + numberFilename + " не найден.");
-                    }
+                    fileManager.chooseNumberDictionary(scanner);
                     continue;
                 case "5":
-                    System.out.println("Выберите тип нового словаря:");
-                    System.out.println("1. Буквенный словарь (4 символа латиницы)");
-                    System.out.println("2. Цифровой словарь (5 цифр)");
-                    String newDictChoice = scanner.next();
-                    if (newDictChoice.equals("1")) {
-                        letterFilename = promptFilename(scanner, "Введите имя файла для нового буквенного словаря:");
-                        ensureFileExists(letterFilename);
-                        letterDictionary = new LetterDictionary(letterFilename);
-                        System.out.println("Новый буквенный словарь создан: " + letterFilename);
-                    } else if (newDictChoice.equals("2")) {
-                        numberFilename = promptFilename(scanner, "Введите имя файла для нового цифрового словаря:");
-                        ensureFileExists(numberFilename);
-                        numberDictionary = new NumberDictionary(numberFilename);
-                        System.out.println("Новый цифровой словарь создан: " + numberFilename);
-                    } else {
-                        System.out.println("Неверный выбор");
-                    }
+                    fileManager.createNewDictionary(scanner);
                     continue;
                 case "6":
                     System.exit(0);
@@ -147,17 +94,6 @@ public class Main {
                         System.out.println("Неверный выбор");
                 }
             }
-        }
-    }
-
-    private static String promptFilename(Scanner scanner, String promptMessage) {
-        while (true) {
-            System.out.println(promptMessage);
-            String input = scanner.next();
-            if (!input.trim().isEmpty()) {
-                return input;
-            }
-            System.out.println("Имя файла не может быть пустым.");
         }
     }
 }
