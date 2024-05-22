@@ -53,6 +53,12 @@ public abstract class AbstractDictionary implements Dictionary {
     protected abstract boolean isValidKey(String key);
 
     private void writeDictionary(Map<String, String> dictionary) {
-
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            for (Map.Entry<String, String> entry : dictionary.entrySet()) {
+                writer.write(entry.getKey() + ":" + entry.getValue() + "\n");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
