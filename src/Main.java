@@ -4,8 +4,14 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        LetterDictionary letterDictionary = new LetterDictionary("letter_dictionary.txt");
-        NumberDictionary numberDictionary = new NumberDictionary("number_dictionary.txt");
+
+        System.out.println("Введите имя файла для словаря с 4 символами латиницы:");
+        String letterFilename = scanner.nextLine();
+        System.out.println("Введите имя файла для словаря с 5 символами цифр:");
+        String numberFilename = scanner.nextLine();
+
+        LetterDictionary letterDictionary = new LetterDictionary(letterFilename);
+        NumberDictionary numberDictionary = new NumberDictionary(numberFilename);
 
         System.out.println("Выберите язык словаря:");
         System.out.println("1. Словарь с 4 символами латиницы");
@@ -72,8 +78,12 @@ public class Main {
     }
 
     private static void printDictionary(Map<String, String> dictionary) {
-        for (Map.Entry<String, String> entry : dictionary.entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue());
+        if (dictionary.isEmpty()) {
+            System.out.println("Словарь пуст.");
+        } else {
+            for (Map.Entry<String, String> entry : dictionary.entrySet()) {
+                System.out.println(entry.getKey() + " : " + entry.getValue());
+            }
         }
     }
 }

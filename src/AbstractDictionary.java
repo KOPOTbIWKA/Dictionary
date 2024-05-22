@@ -16,8 +16,16 @@ public abstract class AbstractDictionary implements Dictionary {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(":");
-                if (isValidKey(parts[0])) {
-                    dictionary.put(parts[0], parts[1]);
+                if (parts.length == 2) {
+                    String key = parts[0].trim();
+                    String value = parts[1].trim();
+                    if (isValidKey(key)) {
+                        dictionary.put(key, value);
+                    } else {
+                        System.out.println("Неверный формат ключа: " + key);
+                    }
+                } else {
+                    System.out.println("Неверный формат строки: " + line);
                 }
             }
         } catch (Exception e) {
@@ -55,7 +63,7 @@ public abstract class AbstractDictionary implements Dictionary {
     private void writeDictionary(Map<String, String> dictionary) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (Map.Entry<String, String> entry : dictionary.entrySet()) {
-                writer.write(entry.getKey() + ":" + entry.getValue() + "\n");
+                writer.write(entry.getKey() + " : " + entry.getValue() + "\n");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
