@@ -47,9 +47,13 @@ public abstract class AbstractDictionary implements Dictionary {
     }
 
     @Override
-    public String searchEntry(String key) {
+    public void searchEntry(String key) {
         Map<String, String> dictionary = readDictionary();
-        return dictionary.get(key);
+        if (dictionary.get(key) != null) {
+            System.out.println("Перевод: " + dictionary.get(key));
+        } else {
+            System.out.println("Запись не найдена.");
+        }
     }
 
     @Override
