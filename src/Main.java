@@ -69,42 +69,37 @@ public class Main {
                     System.out.println("4. Добавить запись");
                     System.out.println("5. Выйти из словаря");
                     String action = scanner.next();
-
-                    try {
-                        switch (action) {
-                            case "1":
-                                printDictionary(dictionary.readDictionary());
-                                break;
-                            case "2":
-                                System.out.println("Введите ключ для удаления:");
-                                String keyToRemove = scanner.next();
-                                dictionary.removeEntry(keyToRemove);
-                                break;
-                            case "3":
-                                System.out.println("Введите ключ для поиска:");
-                                String keyToSearch = scanner.next();
-                                String translation = dictionary.searchEntry(keyToSearch);
-                                if (translation != null) {
-                                    System.out.println("Перевод: " + translation);
-                                } else {
-                                    System.out.println("Запись не найдена");
-                                }
-                                break;
-                            case "4":
-                                System.out.println("Введите ключ:");
-                                String keyToAdd = scanner.next();
-                                System.out.println("Введите перевод:");
-                                String valueToAdd = scanner.next();
-                                dictionary.addEntry(keyToAdd, valueToAdd);
-                                break;
-                            case "5":
-                                running = false;
-                                continue;
-                            default:
-                                System.out.println("Неверный выбор");
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Ошибка ввода: " + e.getMessage());
+                    switch (action) {
+                        case "1":
+                            printDictionary(dictionary.readDictionary());
+                            break;
+                        case "2":
+                            System.out.println("Введите ключ для удаления:");
+                            String keyToRemove = scanner.next();
+                            dictionary.removeEntry(keyToRemove);
+                            break;
+                        case "3":
+                            System.out.println("Введите ключ для поиска:");
+                            String keyToSearch = scanner.next();
+                            String translation = dictionary.searchEntry(keyToSearch);
+                            if (translation != null) {
+                                System.out.println("Перевод: " + translation);
+                            } else {
+                                System.out.println("Запись не найдена");
+                            }
+                            break;
+                        case "4":
+                            System.out.println("Введите ключ:");
+                            String keyToAdd = scanner.next();
+                            System.out.println("Введите перевод:");
+                            String valueToAdd = scanner.next();
+                            dictionary.addEntry(keyToAdd, valueToAdd);
+                            break;
+                        case "5":
+                            running = false;
+                            continue;
+                        default:
+                            System.out.println("Неверный выбор");
                     }
                 }
             }
